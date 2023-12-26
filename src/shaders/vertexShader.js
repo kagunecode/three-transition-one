@@ -1,5 +1,6 @@
 const frameVertexShader = `
 uniform float u_progress;
+uniform float u_direction;
 varying vec2 vUv;
 
 void main() {
@@ -12,14 +13,17 @@ void main() {
     float normalDistance = distance/maxDistance;
 
     float stickTo = normalDistance;
+    float stickOut = -normalDistance;
+
+    float stickEffect = mix(stickTo, stickOut, u_direction);
 
     float secProgress = min(2.*u_progress, 2.*(1. - u_progress));
 
-    float zOffset = 2.0;
+    float zOffset = 4.0;
 
-    float zProgress = clamp(2.*u_progress, 0., 1.);
+    float zProgress = mix(clamp(2.*u_progress, 0., 1.), clamp(1. - 2.*(1. - u_progress), 0., 1.), u_direction);
 
-    pos.z += zOffset*(stickTo * secProgress - zProgress);
+    pos.z += zOffset*(stickEffect * secProgress - zProgress);
 
     vUv = uv;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
