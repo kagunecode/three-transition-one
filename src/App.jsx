@@ -5,7 +5,6 @@ import { CameraControls } from "@react-three/drei";
 export default function App() {
   return (
     <Canvas>
-      <CameraControls />
       <Frame />
     </Canvas>
   );
