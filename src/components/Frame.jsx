@@ -1,12 +1,13 @@
-import { useFrame, useThree } from "@react-three/fiber";
-import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import img from "../assets/img/yir.png";
+import { useFrame, useThree } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
+import { useMemo, useRef } from "react";
 import { motion } from "framer-motion-3d";
 
 import { frameFragmentShader } from "../shaders/fragmentShader";
 import { frameVertexShader } from "../shaders/vertexShader";
-import { useTexture } from "@react-three/drei";
+
+import img from "../assets/img/yir.png";
 
 export default function Frame({ ...props }) {
   const viewport = useThree((state) => state.viewport);
@@ -47,7 +48,7 @@ export default function Frame({ ...props }) {
         ref={plane}
         scale={[viewport.width, viewport.height, 1]}
       >
-        <planeGeometry args={[1, 1, 100, 100]} />
+        <planeGeometry args={[1, 1, 10, 10]} />
         <shaderMaterial
           vertexShader={frameVertexShader}
           fragmentShader={frameFragmentShader}
