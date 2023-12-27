@@ -2,12 +2,11 @@ import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { useMemo, useRef } from "react";
-import { motion } from "framer-motion-3d";
 
 import { frameFragmentShader } from "../shaders/fragmentShader";
 import { frameVertexShader } from "../shaders/vertexShader";
 
-import img from "../assets/img/yir.png";
+import img from "/yir.png";
 
 export default function Frame({ ...props }) {
   const viewport = useThree((state) => state.viewport);
@@ -34,7 +33,7 @@ export default function Frame({ ...props }) {
     plane.current.material.uniforms.u_progress.value = THREE.MathUtils.lerp(
       plane.current.material.uniforms.u_progress.value,
       clicked.current ? 1.0 : 0.0,
-      0.06
+      0.07
     );
     plane.current.material.uniforms.u_direction.value = clicked.current
       ? 0.0
@@ -43,18 +42,18 @@ export default function Frame({ ...props }) {
 
   return (
     <group {...props}>
-      <motion.mesh
+      <mesh
         onClick={() => (clicked.current = !clicked.current)}
         ref={plane}
         scale={[viewport.width, viewport.height, 1]}
       >
-        <planeGeometry args={[1, 1, 10, 10]} />
+        <planeGeometry args={[1, 1, 30, 30]} />
         <shaderMaterial
           vertexShader={frameVertexShader}
           fragmentShader={frameFragmentShader}
           uniforms={uniforms}
         />
-      </motion.mesh>
+      </mesh>
     </group>
   );
 }
